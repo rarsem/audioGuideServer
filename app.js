@@ -7,7 +7,9 @@ const mongoose = require('mongoose');
 
 const circuitsRoutes = require("./routes/circuits")
 const arretsRoutes = require("./routes/arrets")
-//const userRoutes = require("./routes/user")
+const userRoutes = require("./routes/user")
+const touristRoutes = require("./routes/tourist")
+const authorizationRoutes = require('./routes/authorization')
 
 const app = express();
 
@@ -41,7 +43,7 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
       };
       
 // Enable preflight requests for all routes
-//app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));
 // Enable CORS for all routes or configure it as needed
 // Configure Express to serve static files from the "uploads" directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -115,8 +117,13 @@ if (range !== undefined) {
   //res.json('Hello World')
 })
 
-
 app.use( '/api/circuits', circuitsRoutes);
-app.use('/api/arrets', arretsRoutes)
+app.use('/api/arrets', arretsRoutes);
+app.use('/api/user', userRoutes);
+app.use('/api/grant-authorization', authorizationRoutes);
+
+
+//tourist
+app.use('/api/tourist', touristRoutes);
 
 module.exports = app;

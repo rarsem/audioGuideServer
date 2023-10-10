@@ -1,4 +1,5 @@
 const mongoose =  require('mongoose');
+const Schema = mongoose.Schema;
 
 // Define a schema for the Circuit data
 const circuitSchema = new mongoose.Schema({

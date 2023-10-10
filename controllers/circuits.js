@@ -1,5 +1,6 @@
 //const circuit = require('../models/circuit');
 const CircuitModel = require('../models/circuit');
+const ArretModel = require('../models/arret')
 
 exports.createCircuit = (req,res,next)=>{
    
@@ -41,6 +42,30 @@ exports.createCircuit = (req,res,next)=>{
     });
    
 }
+
+exports.getCircuitsWithArrets = async (req, res, next) => {
+    try {
+      // Step 1: Retrieve all circuits
+      const circuits = await CircuitModel.find({});
+  
+      // Step 2: For each circuit, retrieve associated arrets
+      const circuitsWithArrets = await Promise.all(
+        circuits.map(async (circuit) => {
+          const arrets = await ArretModel.find({ idCircuit: circuit._id });
+          return { ...circuit.toObject(), arrets };
+        })
+      );
+  
+      res.json(circuitsWithArrets);
+    } catch (error) {
+      console.error('Error retrieving circuits with arrets:', error);
+      res.status(500).json({
+        message: 'Fetching circuits with arrets failed',
+        error: error.message
+      });
+    }
+};
+
 
 exports.getCircuits = async (req, res, next) => {
     try {

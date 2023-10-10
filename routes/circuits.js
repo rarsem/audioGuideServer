@@ -19,6 +19,9 @@ router.post('',upload.single('image'), CircuitsController.createCircuit)
 //all posts
 router.get('', CircuitsController.getCircuits)
 
+
+router.get('/getCircuitsWithArrets', CircuitsController.getCircuitsWithArrets)
+
 // get post by id
 router.get('/:id' , CircuitsController.getCircuitById)
 
@@ -26,7 +29,6 @@ router.get('/:id' , CircuitsController.getCircuitById)
 
 //router.put('/:id',checkAuth, extractFile, PostsController.updatePost)
 router.put('/:id',upload.single('image'), CircuitsController.updateCircuit)
-
 
 //router.delete('/:id',checkAuth , PostsController.deletePost)
 router.delete('/:id', CircuitsController.deleteCircuit)
