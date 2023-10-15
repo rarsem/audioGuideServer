@@ -35,50 +35,58 @@ exports.createTourist = (req, res, next) => {
 };
 
 exports.touristLogin = (req, res, next) => {
-  let fetchedTourist;
-  Tourist.findOne({ email: req.body.email })
+  const { email, password } = req.body;
+
+  // Step 1: Find the tourist by email and select the password field
+  Tourist.findOne({ email }).select('+password').exec()
     .then((tourist) => {
       if (!tourist) {
         return res.status(401).json({
-          message: "Authentication failed!",
-        });
-      }
-      fetchedTourist = tourist;
-      // Compare password by bcrypt
-      return bcrypt.compare(req.body.password, tourist.password);
-    })
-    .then((result) => {
-      if (!result) {
-        return res.status(401).json({
-          message: "Authentication failed!",
+          message: 'Authentication failed! Tourist not found.',
         });
       }
 
-      const token = jwt.sign(
-        { email: fetchedTourist.email, userId: fetchedTourist._id },
-        process.env.JWT_KEY,
-        //{ expiresIn: "1h" }
-      );
+      // Step 2: Compare the provided password with the hashed password
+      bcrypt.compare(password, tourist.password, (err, result) => {
+        if (err) {
+          return res.status(500).json({
+            error: err,
+          });
+        }
+        if (result) {
+          // Step 3: If passwords match, create a JWT token
+          const token = jwt.sign(
+            {
+              email: tourist.email,
+              userId: tourist._id,
+            },
+            process.env.JWT_KEY, // Your secret key
+            { expiresIn: '1h' } // Token expiration time
+          );
 
-      res.status(200).json({
-        token : token,
-        //expiresIn: 3600,
-        //userId: fetchedTourist._id,
-        tourist : {
-          id :fetchedTourist._id,
-          firstName : fetchedTourist.firstName,
-          lastName : fetchedTourist.lastName,
-          email : fetchedTourist.email 
+          res.status(200).json({
+            message: 'Authentication successful',
+            token,
+            tourist: {
+              id: tourist._id,
+              firstName: tourist.firstName,
+              lastName: tourist.lastName,
+              email: tourist.email,
+            },
+          });
+        } else {
+          res.status(401).json({
+            message: 'Authentication failed! Invalid password.',
+          });
         }
       });
     })
     .catch((err) => {
-      res.status(401).json({
-        message: "Invalid authentication credentials!",
+      res.status(500).json({
+        error: err,
       });
     });
 };
-
 
 exports.isEmailUsed = async (req, res) => {
   const { email } = req.body;

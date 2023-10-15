@@ -13,22 +13,25 @@ const authorizationRoutes = require('./routes/authorization')
 
 const app = express();
 
-
 mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
-    .then(()=>{
-            console.log('conntect with mongoDb done!!')
-    }).catch(() => {
-            console.log('connection failed')
-    })
+.then(()=>{
+        console.log('conntect with mongoDb done!!')
+}).catch(() => {
+        console.log('connection failed')
+})
 
     const allowedOrigins = [
         'capacitor://localhost',
         'ionic://localhost',
         'http://localhost',
         'http://10.0.2.2',
+        'http://192.168.0.122',
+        'http://192.168.8.115:8100',
+        'http://192.168.234.1:8100',
         'http://localhost:8080',
         'http://localhost:8100',
         'http://localhost:4200',
+        'http://192.168.190.1:8100',
       ];
       
       // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
@@ -42,8 +45,8 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         },
       };
       
-// Enable preflight requests for all routes
-app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
+
 // Enable CORS for all routes or configure it as needed
 // Configure Express to serve static files from the "uploads" directory
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
@@ -121,7 +124,6 @@ app.use( '/api/circuits', circuitsRoutes);
 app.use('/api/arrets', arretsRoutes);
 app.use('/api/user', userRoutes);
 app.use('/api/grant-authorization', authorizationRoutes);
-
 
 //tourist
 app.use('/api/tourist', touristRoutes);
