@@ -8,22 +8,15 @@ exports.garantAuthorization = async (req,res,next)=>{
     const { touristId, circuitId } = req.body;
 
   try {
-    const authorization = await Authorization.findOneAndUpdate(
-      { tourist: touristId, circuit: circuitId },
-      { authorized: true },
-      { new: true }
-    );
-
-    if (!authorization) {
-      // If there was no existing authorization record, create one
-      const newAuthorization = new Authorization({
-        tourist: touristId,
-        circuit: circuitId,
-        authorized: false,
-      });
-      await newAuthorization.save();
-    }
-
+   
+    // If there was no existing authorization record, create one
+    const newAuthorization = new Authorization({
+      tourist: touristId,
+      circuit: circuitId,
+      authorized: false,
+    });
+    
+    await newAuthorization.save();
     res.json({ success: true, message: 'Authorization granted successfully.' });
   } catch (error) {
     console.error('Error granting authorization:', error);
