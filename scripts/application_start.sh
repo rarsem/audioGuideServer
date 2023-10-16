@@ -1,18 +1,17 @@
 #!/bin/bash
 
-#give permission for everything in the express-app directory
-sudo chmod -R 777 /home/ec2-user/express-app
+# Set the PATH to include Node.js and npm
+export PATH=$PATH:/usr/bin/node:/usr/bin/npm
 
-#navigate into our working directory where we have all our github files
-cd /home/ec2-user/express-app
+# Set permissions for everything in a directory recursively
+chmod -R 644 /home/ec2-user/express-app  # For files
+chmod -R 755 /home/ec2-user/express-app  # For directories
 
-#add npm and node to path
-export NVM_DIR="$HOME/.nvm"	
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # loads nvm	
-[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # loads nvm bash_completion (node is in path now)
+# Navigate to your application directory
+cd /var/www/myapp
 
-#install node modules
+# Install project dependencies using npm
 npm install
 
-#start our node app in the background
-node server.js > app.out.log 2> app.err.log < /dev/null & 
+# Start your Node.js application (e.g., using node)
+node server.js
