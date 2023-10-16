@@ -1,7 +1,4 @@
 #!/bin/bash
-
-#!/bin/bash
-# Change to your app directory
-cd /var/www/audioGuideServer
-# Start the Node.js application using the script defined in package.json
-npm run server
+# Stop all servers and start the server
+pm2 stop all
+pm2 start /home/ubuntu/my-app1/server.js
