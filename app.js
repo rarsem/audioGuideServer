@@ -32,6 +32,7 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         'http://localhost:8100',
         'http://localhost:4200',
         'http://192.168.190.1:8100',
+        'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
       ];
       
       // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
