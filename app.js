@@ -32,6 +32,7 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         'http://localhost:8100',
         'http://localhost:4200',
         'http://192.168.190.1:8100',
+        'http://51.20.53.50:3000',
         'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
       ];
       
