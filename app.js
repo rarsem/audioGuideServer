@@ -32,6 +32,10 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         'http://localhost:8100',
         'http://localhost:4200',
         'http://192.168.190.1:8100',
+        'ionic://localhost:8100',
+        'ionic://*.*',
+        'ionic://*.*:3000',
+        'file://*',
         'http://51.20.53.50:3000',
         'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
       ];
@@ -47,7 +51,7 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         },
       };
       
-app.use(cors());
+app.use(cors(corsOptions));
 
 // Enable CORS for all routes or configure it as needed
 // Configure Express to serve static files from the "uploads" directory
