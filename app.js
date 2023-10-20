@@ -47,7 +47,7 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         },
       };
       
-app.use(cors(corsOptions));
+app.use(cors());
 
 // Enable CORS for all routes or configure it as needed
 // Configure Express to serve static files from the "uploads" directory
