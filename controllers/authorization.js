@@ -112,3 +112,19 @@ exports.changeAuthorization =  async (req, res) => {
     res.status(500).json({ message: 'Toggling authorization failed', error: error.message });
   }
 };
+
+// // Function to remove all authorization documents
+// async function removeAllAuthorizations() {
+//   try {
+//     const result = await Authorization.deleteMany({});
+//     console.log(`Deleted ${result.deletedCount} authorization documents`);
+//   } catch (error) {
+//     console.error('Error deleting authorization documents: ' + error);
+//   } finally {
+//     // Close the database connection
+//     mongoose.connection.close();
+//   }
+// }
+
+// // Call the function to remove all authorization documents
+// removeAllAuthorizations();

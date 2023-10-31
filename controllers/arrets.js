@@ -133,7 +133,7 @@ exports.updateArret = async (req, res, next) => {
               lat: req.body.mapContentLat,
               lng: req.body.mapContentLng
             },
-            specificDestinations: req.body.specificDestinations,
+            specificDestinations: req.body.specificDestinations || [],
         };
 
         // Handle file updates (if needed)
