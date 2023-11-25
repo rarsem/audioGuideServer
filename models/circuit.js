@@ -15,7 +15,8 @@ const circuitSchema = new mongoose.Schema({
     mapContent: {
         lat: Number,
         lng: Number
-    }
+    },
+    showPolyline: Boolean
 });
 
 // Create a Mongoose model based on the schema

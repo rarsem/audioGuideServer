@@ -61,7 +61,9 @@ exports.touristLogin = (req, res, next) => {
               userId: tourist._id,
             },
             process.env.JWT_KEY, // Your secret key
-            { expiresIn: '1h' } // Token expiration time
+            // { 
+            //   expiresIn: '30s' 
+            // } // Token expiration time
           );
 
           res.status(200).json({

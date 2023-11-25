@@ -2,6 +2,8 @@ const Authorization = require('../models/authorization'); // Import your models
 
 // const Circuit = require('../models/Circuit');
 // const Tourist = require('../models/Tourist');
+const User = require("../models/user")
+
 
 exports.garantAuthorization = async (req,res,next)=>{
    
@@ -122,7 +124,7 @@ exports.changeAuthorization =  async (req, res) => {
 //     console.error('Error deleting authorization documents: ' + error);
 //   } finally {
 //     // Close the database connection
-//     mongoose.connection.close();
+//     //mongoose.connection.close();
 //   }
 // }
 
