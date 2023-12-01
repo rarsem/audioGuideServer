@@ -20,36 +20,36 @@ mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluste
         console.log('connection failed')
 })
 
-    const allowedOrigins = [
-        'capacitor://localhost',
-        'ionic://localhost',
-        'http://localhost',
-        'http://10.0.2.2',
-        'http://192.168.0.122',
-        'http://192.168.8.115:8100',
-        'http://192.168.234.1:8100',
-        'http://localhost:8080',
-        'http://localhost:8100',
-        'http://localhost:4200',
-        'http://192.168.190.1:8100',
-        'ionic://localhost:8100',
-        'ionic://*.*',
-        'ionic://*.*:3000',
-        'file://*',
-        'http://51.20.53.50:3000',
-        'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
-      ];
-      
-      // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-      const corsOptions = {
-        origin: (origin, callback) => {
-          if (allowedOrigins.includes(origin) || !origin) {
-            callback(null, true);
-          } else {
-            callback(new Error('Origin not allowed by CORS'));
-          }
-        },
-      };
+const allowedOrigins = [
+    'capacitor://localhost',
+    'ionic://localhost',
+    'http://localhost',
+    'http://10.0.2.2',
+    'http://192.168.0.122',
+    'http://192.168.8.115:8100',
+    'http://192.168.234.1:8100',
+    'http://localhost:8080',
+    'http://localhost:8100',
+    'http://localhost:4200',
+    'http://192.168.190.1:8100',
+    'ionic://localhost:8100',
+    'ionic://*.*',
+    'ionic://*.*:3000',
+    'file://*',
+    'http://51.20.53.50:3000',
+    'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
+  ];
+  
+  // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
+  const corsOptions = {
+    origin: (origin, callback) => {
+      if (allowedOrigins.includes(origin) || !origin) {
+        callback(null, true);
+      } else {
+        callback(new Error('Origin not allowed by CORS'));
+      }
+    },
+  };
       
 app.use(cors(corsOptions));
 
@@ -59,7 +59,6 @@ app.use(cors(corsOptions));
 app.use('/uploads', express.static('uploads'));
 
 app.use(bodyParser.json());
-
 
 app.use((req,res,next) => {
     //console.log(req)
@@ -74,13 +73,6 @@ app.use((req,res,next) => {
     )
     next();
 })
-
-
-// // Serve the main index.html for all other routes
-// app.get('*', (req, res) => {
-//   res.sendFile(path.join(__dirname, 'public', 'index.html'));
-// });
-
 
 
 app.use( '/api/circuits', circuitsRoutes);
