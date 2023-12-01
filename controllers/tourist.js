@@ -34,6 +34,32 @@ exports.createTourist = (req, res, next) => {
   });
 };
 
+
+exports.updateTourist = async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  const updatedTourist = req.body;
+  console.log(updatedTourist)
+  // Extract only the allowed fields (name and firstName)
+  const { lastName , firstName } = updatedTourist;
+  const allowedUpdates = { lastName, firstName };
+
+  try {
+    // Update circuit in MongoDB using findOneAndUpdate
+    const result = await Tourist.findOneAndUpdate(
+      { _id: id }, // assuming id is a string
+      { $set: allowedUpdates },
+      { new: true } // Return the updated document
+    );
+
+    res.json(result);
+
+  } catch (error) {
+    console.error('Error updating tourist in MongoDB:', error);
+    res.status(500).json({ error: 'Internal Server Error' });
+  }
+};
+
 exports.touristLogin = (req, res, next) => {
   const { email, password } = req.body;
 

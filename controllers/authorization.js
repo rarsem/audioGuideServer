@@ -27,7 +27,6 @@ exports.garantAuthorization = async (req,res,next)=>{
    
 }
 
-
 // // Check authorization for a tourist and a circuit
 exports.checkAutorisation =  async (req, res) => {
     const { touristId, circuitId } = req.params;
@@ -92,8 +91,6 @@ exports.getUnauthorizedTourist = async (req, res, next) => {
 exports.changeAuthorization =  async (req, res) => {
   try {
     const authorizationId = req.params.id;
-
-    console.log(authorizationId)
 
     // Find the Authorization record by ID
     const authorization = await Authorization.findById(authorizationId);
