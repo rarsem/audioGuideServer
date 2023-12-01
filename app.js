@@ -74,7 +74,6 @@ app.use((req,res,next) => {
     next();
 })
 
-
 app.use( '/api/circuits', circuitsRoutes);
 app.use('/api/arrets', arretsRoutes);
 app.use('/api/user', userRoutes);
