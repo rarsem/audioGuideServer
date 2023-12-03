@@ -36,5 +36,5 @@ router.get('', ArretsController.getArrets)
 
 // //router.delete('/:id',checkAuth , PostsController.deletePost)
 router.delete('/:id', ArretsController.deleteArret)
-
+//test push
 module.exports = router;
