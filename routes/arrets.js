@@ -24,7 +24,7 @@ router.post('', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', 
 // //router.put('/:id',checkAuth, extractFile, PostsController.updatePost)
 router.put('/:id',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), ArretsController.updateArret)
 
-// test push 
+// test push test
 // // get arret by id
 router.get('/:idCircuit/:id' , ArretsController.getArretById);
 
