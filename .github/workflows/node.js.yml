@@ -32,7 +32,7 @@ jobs:
       continue-on-error: true
 
     - name: Deploy Remaining Files
-      - run: |
+      run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
 
