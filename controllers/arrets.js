@@ -136,7 +136,7 @@ exports.updateArret = async (req, res, next) => {
             specificDestinations: req.body.specificDestinations || [],
         };
 
-        // Handle file updates (if needed)
+        // Handle file updates (if needed)s
         if (req.files && req.files['image'] && req.files['image'][0]) {
             // Access the uploaded image file using req.files
             const imageFile = req.files['image'][0];
