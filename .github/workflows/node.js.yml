@@ -26,7 +26,7 @@ jobs:
         cache: 'npm'
     - run: npm ci
     - run: |
-        rsync -av --exclude=uploads/ ./ ubuntu@ip-172-31-43-227.compute-1.amazonaws.com:/home/ubuntu/audioGuideServer/
+        rsync -av --exclude=uploads/ ./ ubuntu@172.31.43.227:/home/ubuntu/audioGuideServer/
     - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
