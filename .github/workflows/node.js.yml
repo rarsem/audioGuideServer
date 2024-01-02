@@ -14,7 +14,11 @@ jobs:
         node-version: [18.x]
 
     steps:
+    - name: backup existing uploads folder 
+      run: mv uploads/ uploads_backup/
     - uses: actions/checkout@v3
+    - name: restore folder 
+      run: mv uploads_backup/ uploads/
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
