@@ -19,9 +19,6 @@ jobs:
 
     steps:
     - uses: actions/checkout@v3
-      with:
-        ref: ${{ github.sha }}
-        fetch-depth: 0 
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
@@ -31,4 +28,10 @@ jobs:
     - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
+     - name: Download Files from Server
+      run: |
+        sudo apt-get install -y openssh-client
+        mkdir -p downloads
+        scp -r ubuntu@172.31.43.227:/home/ubuntu/actions-runner/_work/audioGuideServer/audioGuideServer/uploads/* downloads
+    - run: pm2 restart server
       
