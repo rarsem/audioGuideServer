@@ -28,7 +28,5 @@ jobs:
     - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-    - name: Exclude uploads from rsync
-      run: rsync -av --exclude=uploads/ ./ -v
     - run: pm2 restart server
       
