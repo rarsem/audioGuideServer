@@ -15,10 +15,10 @@ jobs:
 
     steps:
     - name: backup existing uploads folder 
-      run: mv uploads/ uploads_backup/
+      run: mv uploads/ uploads_tmp/
     - uses: actions/checkout@v3
     - name: restore folder 
-      run: mv uploads_backup/ uploads/
+      run: mv uploads_tmp/ uploads/
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
