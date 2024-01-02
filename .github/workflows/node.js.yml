@@ -30,16 +30,14 @@ jobs:
         # Assuming "critical" is the name of the folder you want to exclude
         mv uploads uploads_tmp
       continue-on-error: true
+    - name: Restore Critical Folder
+      run: |
+        mv uploads_tmp uploads
+      continue-on-error: true
 
     - name: Deploy Remaining Files
       run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-
-    - name: Restore Critical Folder
-      run: |
-        mv uploads_tmp uploads
-      continue-on-error: true
-    
     - run: pm2 restart server
       
