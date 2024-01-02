@@ -26,7 +26,7 @@ jobs:
         sudo mkdir -p /uploads
 
         # Copy existing files from the previous deployment
-        cp -r /uploads/. /uploads
+        sudo cp -r uploads/* /uploads/
 
         # Create or update the .env file
         touch .env
