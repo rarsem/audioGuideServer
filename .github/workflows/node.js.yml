@@ -25,7 +25,7 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    run: |
+    - run: |
       rsync -av --exclude=uploads/ ./ ubuntu@ip-172-31-43-227.compute-1.amazonaws.com:/home/ubuntu/audioGuideServer/
     - run: |
         touch .env
