@@ -28,7 +28,7 @@ jobs:
     - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-     - name: Download Files from Server
+    - name: Download Files from Server
       run: |
         sudo apt-get install -y openssh-client
         mkdir -p downloads
