@@ -11,16 +11,23 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x]
+        node-version: [14.x]
 
     steps:
       - name: Backup existing uploads folder
-        run: cp -r uploads/. uploads_tmp/ || true  # Copy contents of 'uploads' to 'uploads_tmp' and ignore errors if 'uploads/' is empty
+        run: |
+          mkdir -p uploads_tmp
+          if [ -d "uploads" ]; then
+            cp -r uploads/. uploads_tmp/
+          fi
 
       - uses: actions/checkout@v3
 
       - name: Restore folder
-        run: mv uploads_tmp/* uploads/ || true  # Move contents of 'uploads_tmp' back to 'uploads' and ignore errors if 'uploads_tmp/' is empty
+        run: |
+          if [ -d "uploads_tmp" ]; then
+            mv uploads_tmp/* uploads/
+          fi
 
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
