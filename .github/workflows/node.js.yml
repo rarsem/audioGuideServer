@@ -1,11 +1,8 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Node.js CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [main]
 
 jobs:
   build:
@@ -15,29 +12,39 @@ jobs:
     strategy:
       matrix:
         node-version: [18.x]
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - uses: actions/checkout@v3
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-    - run: npm ci
-    - name: Exclude Critical Folder
+
+    - name: Install Dependencies
+      run: npm ci
+
+    # Exclude "uploads" folder temporarily
+    - name: Exclude Uploads Folder
       run: |
-        # Assuming "critical" is the name of the folder you want to exclude
         mv uploads uploads_tmp
       continue-on-error: true
-    - name: Restore Critical Folder
-      run: |
-        mv uploads_tmp uploads
-      continue-on-error: true
 
+    # Deploy remaining files
     - name: Deploy Remaining Files
       run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-    - run: pm2 restart server
+      continue-on-error: true
+
+    - name: Restart PM2 process
+      run: pm2 restart server
+
+    # Restore "uploads" folder
+    - name: Restore Uploads Folder
+      run: |
+        mv uploads_tmp uploads
+      continue-on-error: true
       
