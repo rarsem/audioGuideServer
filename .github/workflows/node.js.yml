@@ -25,13 +25,21 @@ jobs:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
-    - run: |
+    - name: Exclude Critical Folder
+      run: |
+        # Assuming "critical" is the name of the folder you want to exclude
+        mv uploads uploads_tmp
+      continue-on-error: true
+
+    - name: Deploy Remaining Files
+      - run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-    - name: Download Files from Server
+
+    - name: Restore Critical Folder
       run: |
-        sudo apt-get install -y openssh-client
-        mkdir -p downloads
-        scp -o StrictHostKeyChecking=no -r ubuntu@172.31.43.227:/home/ubuntu/actions-runner/_work/audioGuideServer/audioGuideServer/uploads/* downloads/
+        mv uploads_tmp uploads
+      continue-on-error: true
+    
     - run: pm2 restart server
       
