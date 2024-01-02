@@ -22,6 +22,9 @@ jobs:
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
+        ref: ${{ github.sha }}
+        fetch-depth: 0 
+      with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
     - run: npm ci
