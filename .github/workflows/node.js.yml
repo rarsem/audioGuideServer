@@ -2,7 +2,7 @@ name: Node.js CI/CD
 
 on:
   push:
-    branches: [main]
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -14,37 +14,15 @@ jobs:
         node-version: [18.x]
 
     steps:
-    - name: Checkout Repository
-      uses: actions/checkout@v3
-
+    - uses: actions/checkout@v3
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v3
       with:
         node-version: ${{ matrix.node-version }}
         cache: 'npm'
-
-    - name: Install Dependencies
-      run: npm ci
-
-    # Exclude "uploads" folder temporarily
-    - name: Exclude Uploads Folder
-      run: |
-        mv uploads uploads_tmp
-      continue-on-error: true
-
-    # Deploy remaining files
+    - run: npm ci
     - name: Deploy Remaining Files
       run: |
         touch .env
         echo "${{ secrets.PROD_ENV_FILE }}" > .env
-      continue-on-error: true
-
-    - name: Restart PM2 process
-      run: pm2 restart server
-
-    # Restore "uploads" folder
-    - name: Restore Uploads Folder
-      run: |
-        mv uploads_tmp uploads
-      continue-on-error: true
-      
+    - run: pm2 restart server
