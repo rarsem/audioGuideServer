@@ -8,7 +8,7 @@ exports.createArret = async (req, res, next) => {
       const maxOrderArret = await ArretModel.findOne({ idCircuit }).sort({ order: -1 }).exec();
       const order = maxOrderArret ? maxOrderArret.order + 1 : 1; // Increment the order
 
-      // Access the uploaded files using req.filessss
+      // Access the uploaded files using req.files
         const imageFile = req.files['image'][0];
         const audioFile = req.files['audio'][0];
 
