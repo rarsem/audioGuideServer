@@ -18,7 +18,7 @@ jobs:
         run: |
           mkdir -p uploads_tmp
           if [ -d "uploads" ]; then
-            cp -r uploads/. uploads_tmp/
+            cp -r uploads/* uploads_tmp/
           fi
 
       - uses: actions/checkout@v3
@@ -26,7 +26,9 @@ jobs:
       - name: Restore folder
         run: |
           if [ -d "uploads_tmp" ]; then
-            cp -r uploads_tmp/. uploads/
+            rm -rf uploads
+            mkdir -p uploads
+            cp -r uploads_tmp/* uploads/
           fi
 
       - name: Use Node.js ${{ matrix.node-version }}
