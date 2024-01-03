@@ -14,23 +14,7 @@ jobs:
         node-version: [18.x]
 
     steps:
-      - name: Backup existing uploads folder
-        run: |
-          mkdir -p uploads_tmp
-          if [ -d "uploads" ]; then
-            cp -r uploads/* uploads_tmp/
-          fi
-
       - uses: actions/checkout@v3
-
-      - name: Restore folder
-        run: |
-          if [ -d "uploads_tmp" ]; then
-            rm -rf uploads
-            mkdir -p uploads
-            cp -r uploads_tmp/* uploads/
-          fi
-
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
