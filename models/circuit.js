@@ -12,6 +12,7 @@ const circuitSchema = new mongoose.Schema({
     distance: Number,
     duration: String,
     imagePath: String,
+    audioPath: String,
     mapContent: {
         lat: Number,
         lng: Number

@@ -1,7 +1,9 @@
 const express = require("express");
 const CircuitsController = require('../controllers/circuits')
 
-const upload = require('../middleware/uploadImage'); 
+//const upload = require('../middleware/uploadImage'); 
+
+const upload = require('../middleware/uploadFileAndAudio');
 
 // Import the multer configuration
 
@@ -14,7 +16,7 @@ const router = express.Router();
 //chackAuth will run every time and can add req to it 
 //router.post('', checkAuth , extractFile, PostsController.createPost)
 
-router.post('',upload.single('image'), CircuitsController.createCircuit)
+router.post('',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), CircuitsController.createCircuit)
 
 //all posts
 router.get('', CircuitsController.getCircuits)
@@ -28,7 +30,7 @@ router.get('/:id' , CircuitsController.getCircuitById)
 //update methode
 
 //router.put('/:id',checkAuth, extractFile, PostsController.updatePost)
-router.put('/:id',upload.single('image'), CircuitsController.updateCircuit)
+router.put('/:id',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), CircuitsController.updateCircuit)
 
 //router.delete('/:id',checkAuth , PostsController.deletePost)
 router.delete('/:id', CircuitsController.deleteCircuit)

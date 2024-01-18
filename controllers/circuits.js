@@ -4,14 +4,21 @@ const ArretModel = require('../models/arret')
 
 exports.createCircuit = (req,res,next)=>{
    
-    if (!req.file) {
+    if (!req.files) {
         // Handle cases where no image file is provided
         return res.status(400).json({ message: 'Image file is required.' });
     }
     
     // The rest of your circuit creation logic here
-    
-    const imagePath = req.file.path.replace(/\\/g, '/'); // Replace backslashes with forward slashes for the imagePath
+
+    // Access the uploaded files using req.files
+    const imageFile = req.files['image'][0];
+    const audioFile = req.files['audio'][0];
+
+    // Do something with the files, e.g., save their paths to a database
+    const imagePath = imageFile.path.replace(/\\/g, '/');
+    const audioPath = audioFile.path.replace(/\\/g, '/');
+
     const Circuit = new CircuitModel({
         title : req.body.title,
         city : req.body.city,
@@ -21,6 +28,7 @@ exports.createCircuit = (req,res,next)=>{
         distance: 0,
         duration: '',
         imagePath: imagePath,
+        audioPath : audioPath,
         mapContent: {
             lat : req.body.mapContentLat,
             lng : req.body.mapContentLng
@@ -108,11 +116,19 @@ exports.updateCircuit = async (req, res, next) => {
             showPolyline: req.body.showPolyline === 'true' ? true : false 
         };
 
-        // Check if a file was uploaded
-        if (req.file) {
-            // Handle the uploaded file here, e.g., save it to a directory and update the imagePath in updatedCircuitData
-            const imagePath = req.file.path;
-            updatedCircuitData.imagePath = imagePath;
+        // Handle file updates (if needed)
+        if (req.files && req.files['image'] && req.files['image'][0]) {
+            // Access the uploaded image file using req.files
+            const imageFile = req.files['image'][0];
+            // Do something with the image file, e.g., save its path to a database
+            updatedCircuitData.imagePath = imageFile.path.replace(/\\/g, '/');
+        }
+
+        if (req.files && req.files['audio'] && req.files['audio'][0]) {
+            // Access the uploaded audio file using req.files
+            const audioFile = req.files['audio'][0];
+            // Do something with the audio file, e.g., save its path to a database
+            updatedCircuitData.audioPath = audioFile.path.replace(/\\/g, '/');
         }
 
         // Update the circuit by ID

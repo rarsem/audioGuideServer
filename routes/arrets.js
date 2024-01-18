@@ -2,8 +2,8 @@ const express = require("express");
 const ArretsController = require('../controllers/arrets')
 
 //const upload = require('../middleware/uploadImage'); 
-const upload = require('../middleware/uploadFileAndAudio'); // Import the multer configurations
-
+const upload = require('../middleware/uploadFileAndAudio');
+// Import the multer configurations
 
 // Import the multer configuration
 
@@ -24,7 +24,7 @@ router.post('', upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', 
 // //router.put('/:id',checkAuth, extractFile, PostsController.updatePost)
 router.put('/:id',upload.fields([{ name: 'image', maxCount: 1 }, { name: 'audio', maxCount: 1 }]), ArretsController.updateArret)
 
-// test push test test rZ
+
 // // get arret by id
 router.get('/:idCircuit/:id' , ArretsController.getArretById);
 
