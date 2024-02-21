@@ -78,8 +78,8 @@ exports.getCircuitsWithArrets = async (req, res, next) => {
 
 exports.getCircuits = async (req, res, next) => {
     try {
-        const pageSize = +req.query.pagesize || 10; // Default page size to 10 if not provided
-        const currentPage = +req.query.page || 1; // Default current page to 1 if not provided
+        const pageSize = +req.query.pageSize || 10; // Default page size to 10 if not provided
+        const currentPage = +req.query.pageIndex || 1; // Default current page to 1 if not provided
         const skip = (currentPage - 1) * pageSize;
 
         const [circuits, totalCircuits] = await Promise.all([
@@ -90,7 +90,8 @@ exports.getCircuits = async (req, res, next) => {
         res.status(200).json({
             message: 'Circuits fetched successfully',
             circuits: circuits,
-            maxPosts: totalCircuits
+            //maxPosts: totalCircuits,
+            totalItems: totalCircuits,
         });
     } catch (error) {
         console.error('Error fetching circuits:', error);
