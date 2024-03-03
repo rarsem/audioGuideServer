@@ -33,7 +33,8 @@ exports.createCircuit = (req,res,next)=>{
             lat : req.body.mapContentLat,
             lng : req.body.mapContentLng
         },
-        showPolyline : req.body.showPolyline === 'true' ? true : false 
+        showPolyline : req.body.showPolyline === 'true' ? true : false,
+        showMap : req.body.showMap === 'true' ? true : false 
     });
     Circuit.save().then((result) => {
         res.status(201).json({
@@ -105,7 +106,6 @@ exports.getCircuits = async (req, res, next) => {
 exports.updateCircuit = async (req, res, next) => {
     try {
 
-        console.log(req.body.showPolyline)
         const circuitId = req.params.id;
         const updatedCircuitData = {
             city: req.body.city,
@@ -114,7 +114,8 @@ exports.updateCircuit = async (req, res, next) => {
             description: req.body.description,
             languages: req.body.languages,
             mapContent: req.body.mapContent,
-            showPolyline: req.body.showPolyline === 'true' ? true : false 
+            showPolyline: req.body.showPolyline === 'true' ? true : false,
+            showMap : req.body.showMap === 'true' ? true : false 
         };
 
         // Handle file updates (if needed)
