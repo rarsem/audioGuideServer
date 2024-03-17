@@ -82,4 +82,9 @@ app.use('/api/grant-authorization', authorizationRoutes);
 //tourist
 app.use('/api/tourist', touristRoutes);
 
+// Health endpoint
+app.get('/health', (req, res) => {
+  res.status(200).send('Server is up and running!');
+});
+
 module.exports = app;
