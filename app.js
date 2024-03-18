@@ -12,10 +12,9 @@ const touristRoutes = require("./routes/tourist")
 const authorizationRoutes = require('./routes/authorization')
 
 const app = express();
-//
+//mongoose.connect("mongodb+srv://mcoverymaroc:"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority")
 
-//mongoose.connect("mongodb+srv://mmoud:"++"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
-mongoose.connect("mongodb+srv://mcoverymaroc:"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority")
+mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
 .then(()=>{
         console.log('conntect with mongoDb done!!')
 }).catch(() => {
