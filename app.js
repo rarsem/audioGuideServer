@@ -13,7 +13,9 @@ const authorizationRoutes = require('./routes/authorization')
 
 const app = express();
 
-mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
+//mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
+
+mongoose.connect("mongodb+srv://mcoverymaroc:"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority")
 .then(()=>{
         console.log('conntect with mongoDb done!!')
 }).catch(() => {
@@ -37,7 +39,8 @@ const allowedOrigins = [
     'ionic://*.*:3000',
     'file://*',
     'http://51.20.53.50:3000',
-    'http://audioguidea.s3-website.eu-north-1.amazonaws.com'
+    'http://audioguidea.s3-website.eu-north-1.amazonaws.com',
+    'http://api.mcovery.com:3000'
   ];
   
   // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
