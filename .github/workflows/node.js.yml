@@ -23,7 +23,9 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: 'npm'
-
+      - name: Set npm registry
+        run: npm config set registry https://registry.npmjs.org/
+        
       - run: npm ci
 
       - name: Deploy Remaining Files
