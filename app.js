@@ -50,6 +50,8 @@ const allowedOrigins = [
         callback(new Error('Origin not allowed by CORS'));
       }
     },
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    allowedHeaders: ['Content-Type', 'Authorization'], // Add other headers as needed
   };
       
 app.use(cors(corsOptions));
