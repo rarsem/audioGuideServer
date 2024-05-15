@@ -38,7 +38,8 @@ const allowedOrigins = [
     'http://51.20.53.50:3000',
     'http://audioguidea.s3-website.eu-north-1.amazonaws.com',
     'https://api.mcovery.com',
-    'https://api.mcovery.com:3000'
+    'https://api.mcovery.com:3000',
+    'https://admin.mcovery.com'
   ];
   
   // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
