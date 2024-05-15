@@ -2,7 +2,6 @@ const path = require('path')
 const express = require('express');
 const bodyParser =  require('body-parser');
 const cors = require('cors')
-
 const mongoose = require('mongoose');
 
 const circuitsRoutes = require("./routes/circuits")
@@ -38,7 +37,7 @@ const allowedOrigins = [
     'file://*',
     'http://51.20.53.50:3000',
     'http://audioguidea.s3-website.eu-north-1.amazonaws.com',
-    'http://api.mcovery.com:3000',
+    'https://api.mcovery.com',
     'https://api.mcovery.com:3000'
   ];
   

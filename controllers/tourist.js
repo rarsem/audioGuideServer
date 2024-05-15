@@ -4,6 +4,20 @@ const Tourist = require("../models/tourist");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
+const aws = require('aws-sdk');
+require('dotenv').config();
+
+
+const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
+const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+
+// Configure AWS SDK
+aws.config.update({
+  accessKeyId: awsAccessKeyId,
+  secretAccessKey: awsSecretAccessKey,
+  region: 'us-east-1' // Replace with your desired AWS region
+});
+
 
 const touristsMap = new Map(); // Define touristsMap to store tourists temporarily
 
@@ -155,38 +169,43 @@ async function saveTouristToDatabase(tourist) {
 async function sendConfirmationEmail( params ) {
   try {
       // Create a Nodemailer transporter
-      const transporter = nodemailer.createTransport({
-          service: 'gmail',
-          host: "smtp.gmail.com", // SMTP server address (usually mail.your-domain.com)
-          port: 465, // Port for SMTP (usually 465)
-          secure: true, // Usually true if connecting to port 465
-          auth: {
-            user: "m.mesrar.m@gmail.com", // Your email address
-            pass: "fotx ggzl wcsy cjib", // Password (for gmail, your app password)
-            // ⚠️ For better security, use environment variables set on the server for these values when deploying
-          },
-      });
-
-      //   const transporter = nodemailer.createTransport({
-      //     //service: 'gmail',
-      //     service: 'ionos',
-      //     host: "smtp.ionos.fr", // SMTP server address (usually mail.your-domain.com)
-      //     port: 587, // Port for SMTP (usually 465)
-      //     secure: false, // Usually true if connecting to port 465
+      // const transporter = nodemailer.createTransport({
+      //     service: 'gmail',
+      //     host: "smtp.gmail.com", // SMTP server address (usually mail.your-domain.com)
+      //     port: 465, // Port for SMTP (usually 465)
+      //     secure: true, // Usually true if connecting to port 465
       //     auth: {
-      //       user: "noreply@mcovery.com", // Your email address
-      //       pass: "@Zerty11.ma", // Password (for gmail, your app password)
+      //       user: "m.mesrar.m@gmail.com", // Your email address
+      //       pass: "fotx ggzl wcsy cjib", // Password (for gmail, your app password)
       //       // ⚠️ For better security, use environment variables set on the server for these values when deploying
       //     },
       // });
 
+      // const transporter = nodemailer.createTransport({
+      //   host: "email-smtp.us-east-1.amazonaws.com",
+      //   port: 587, // Port for SMTP (usually 465)
+      //   secure: false, // Usually true if connecting to port 465
+      //   auth: {
+      //     user: "AKIATNY4BAWUJD7BR6DC", // Your email address
+      //     pass: "BGUY7xySjXCfTXx2sH8E7Av9RwTGqB7PlH/XsZhje6yA",
+      //   },
+      // });
+
+      // Create Nodemailer transporter
+      const transporter = nodemailer.createTransport({
+        SES: new aws.SES({ apiVersion: '2010-12-01' })
+      });
+
       // Email content
       const mailOptions = {
-          from: 'm.mesrar.m@gmail.com',
+          from: 'infos@mcovery.com',
           to: params.email,
           subject: params.subject,
           html: `<p>Your confirmation code is: ${params.code}</p>`
       };
+
+      //AKIATNY4BAWULGTXV7UW
+      //BFZuI00AUFoiq60E0PVnGKi7fRm2WRhM9cooA0zhoXGS
 
       // Send email
       //const info = await transporter.sendMail(mailOptions);
