@@ -9,6 +9,7 @@ const arretsRoutes = require("./routes/arrets")
 const userRoutes = require("./routes/user")
 const touristRoutes = require("./routes/tourist")
 const authorizationRoutes = require('./routes/authorization')
+const cleanupRouter = require('./routes/cleanup')
 
 const app = express();
 //mongoose.connect("mongodb+srv://mcoverymaroc:"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority")
@@ -85,6 +86,9 @@ app.use('/api/grant-authorization', authorizationRoutes);
 
 //tourist
 app.use('/api/tourist', touristRoutes);
+
+// Use the cleanup router
+app.use('/api', cleanupRouter);
 
 // Health endpoint
 app.get('/health', (req, res) => {

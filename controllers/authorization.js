@@ -7,7 +7,7 @@ const User = require("../models/user")
 
 exports.garantAuthorization = async (req,res,next)=>{
    
-    const { touristId, circuitId } = req.body;
+  const { touristId, circuitId } = req.body;
 
   try {
    
@@ -70,8 +70,8 @@ exports.getUnauthorizedTourist = async (req, res, next) => {
       path: 'tourist',
       select: '-password' // Exclude the password field from the tourist data
       }) ,
-  Authorization.countDocuments()
-      ]);
+      Authorization.countDocuments()
+    ]);
 
       const response = {
           items: arrets, // Renamed 'arrets' to 'items' to match the Angular code
