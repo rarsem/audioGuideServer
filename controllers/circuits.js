@@ -1,6 +1,7 @@
 //const circuit = require('../models/circuit');
 const CircuitModel = require('../models/circuit');
 const ArretModel = require('../models/arret')
+const fs = require('fs');
 
 exports.createCircuit = (req,res,next)=>{
    
@@ -167,12 +168,42 @@ exports.getCircuitById = async (req, res, next) => {
     }
 };
 
+// exports.deleteCircuit = async (req, res, next) => {
+//     try {
+//         const result = await CircuitModel.deleteOne({ _id: req.params.id });
+
+//         if (result.deletedCount > 0) {
+//             return res.status(200).json({ message: 'Circuit deleted' });
+//         }
+
+//         return res.status(404).json({ message: 'Circuit not found' });
+//     } catch (error) {
+//         return res.status(500).json({ message: 'Deleting Circuit failed', error: error.message });
+//     }
+// };
+
 exports.deleteCircuit = async (req, res, next) => {
     try {
+        // Find the Circuit document by ID
+        const circuit = await CircuitModel.findOne({ _id: req.params.id });
+
+        if (!circuit) {
+            return res.status(404).json({ message: 'Circuit not found' });
+        }
+
+        // Delete the Circuit document from the database
         const result = await CircuitModel.deleteOne({ _id: req.params.id });
 
         if (result.deletedCount > 0) {
-            return res.status(200).json({ message: 'Circuit deleted' });
+            // Delete associated files from the file system
+            if (circuit.imagePath) {
+                fs.unlinkSync(circuit.imagePath);
+            }
+            if (circuit.audioPath) {
+                fs.unlinkSync(circuit.audioPath);
+            }
+
+            return res.status(200).json({ message: 'Circuit and associated files deleted' });
         }
 
         return res.status(404).json({ message: 'Circuit not found' });

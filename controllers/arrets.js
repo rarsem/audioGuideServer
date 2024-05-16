@@ -1,5 +1,7 @@
 //const circuit = require('../models/circuit');
 const ArretModel = require('../models/arret');
+const fs = require('fs');
+//const path = require('path');
 
 exports.createArret = async (req, res, next) => {
     try {
@@ -171,16 +173,46 @@ exports.updateArret = async (req, res, next) => {
     }
 };
 
+// exports.deleteArret = async (req, res, next) => {
+//     try {
+//         const result = await ArretModel.deleteOne({ _id: req.params.id });
+
+//         if (result.deletedCount > 0) {
+//             return res.status(200).json({ message: 'Circuit deleted' });
+//         }
+
+//         return res.status(404).json({ message: 'Circuit not found' });
+//     } catch (error) {
+//         return res.status(500).json({ message: 'Deleting Circuit failed', error: error.message });
+//     }
+// };
+
 exports.deleteArret = async (req, res, next) => {
     try {
+        // Find the Arret document by ID
+        const arret = await ArretModel.findOne({ _id: req.params.id });
+
+        if (!arret) {
+            return res.status(404).json({ message: 'Arret not found' });
+        }
+
+        // Delete the Arret document from the database
         const result = await ArretModel.deleteOne({ _id: req.params.id });
 
         if (result.deletedCount > 0) {
-            return res.status(200).json({ message: 'Circuit deleted' });
+            // Delete associated files from the file system
+            if (arret.imagePath) {
+                fs.unlinkSync(arret.imagePath);
+            }
+            if (arret.audioPath) {
+                fs.unlinkSync(arret.audioPath);
+            }
+
+            return res.status(200).json({ message: 'Arret and associated files deleted' });
         }
 
-        return res.status(404).json({ message: 'Circuit not found' });
+        return res.status(404).json({ message: 'Arret not found' });
     } catch (error) {
-        return res.status(500).json({ message: 'Deleting Circuit failed', error: error.message });
+        return res.status(500).json({ message: 'Deleting Arret failed', error: error.message });
     }
 };
