@@ -13,7 +13,7 @@ const cleanupRouter = require('./routes/cleanup')
 //test
 
 const app = express();
-mongoose.connect("mongodb+srv://mcoverymaroc:PU5jVseEXJ8R9AIc@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority",{
+mongoose.connect("mongodb+srv://"+process.env.MONGO_ATLAS_USER+":"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority",{
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })
