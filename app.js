@@ -14,7 +14,7 @@ const cleanupRouter = require('./routes/cleanup')
 
 const app = express();
 const uri = "mongodb+srv://"+process.env.MONGO_ATLAS_USER+":"+process.env.MONGO_ATLAS_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority";
-
+console.log(uri);
 mongoose.connect(uri,{
   useNewUrlParser: true,
   useUnifiedTopology: true,
