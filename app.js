@@ -10,6 +10,7 @@ const userRoutes = require("./routes/user")
 const touristRoutes = require("./routes/tourist")
 const authorizationRoutes = require('./routes/authorization')
 const cleanupRouter = require('./routes/cleanup')
+//test
 
 const app = express();
 mongoose.connect(`mongodb+srv://${process.env.MONGO_ATLAS_USER}:${process.env.MONGO_ATLAS_PW}@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority`)
