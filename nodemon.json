@@ -2,8 +2,8 @@
     "env": {
         "JWT_KEY": "secret_should_be_longer",
         "MONGO_ATLAS_PW_": "wDL2oZpwy1T9qpXX",
-        "MONGO_ATLAS_PW": "PU5jVseEXJ8R9AIc",
-        "MONGO_ATLAS_USER": "mcoverymaroc",
+        "MONGO_PW": "PU5jVseEXJ8R9AIc",
+        "MONGO_USER": "mcoverymaroc",
         "AWS_ACCESS_KEY_ID" : "AKIATNY4BAWUFAMGNWDW",
         "AWS_SECRET_ACCESS_KEY" :"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"
     }

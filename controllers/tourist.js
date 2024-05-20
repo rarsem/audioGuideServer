@@ -4,19 +4,42 @@ const Tourist = require("../models/tourist");
 const nodemailer = require('nodemailer');
 const crypto = require('crypto');
 const mongoose = require('mongoose');
-const aws = require('aws-sdk');
+// let aws = require("@aws-sdk/client-ses");
+// let { defaultProvider } = require("@aws-sdk/credential-provider-node");
 require('dotenv').config();
 
 
-const awsAccessKeyId = process.env.AWS_ACCESS_KEY_ID;
-const awsSecretAccessKey = process.env.AWS_SECRET_ACCESS_KEY
+// // Configure AWS SDK
+// aws.config.update({
+//   accessKeyId: awsAccessKeyId,
+//   secretAccessKey: awsSecretAccessKey,
+//   region: 'us-east-1' // Replace with your desired AWS region
+// });
 
-// Configure AWS SDK
-aws.config.update({
-  accessKeyId: awsAccessKeyId,
-  secretAccessKey: awsSecretAccessKey,
-  region: 'us-east-1' // Replace with your desired AWS region
+// Create an SES client
+// const sesClient = new SES({
+//   region: "us-east-1", // Specify your desired AWS region
+//   credentials: {
+//     accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+//     secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+//   },
+// });
+
+let aws = require("@aws-sdk/client-ses");
+
+const ses = new aws.SES({
+  apiVersion: "2010-12-01",
+  region: "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+  },
 });
+
+
+
+
+
 
 
 const touristsMap = new Map(); // Define touristsMap to store tourists temporarily
@@ -192,8 +215,13 @@ async function sendConfirmationEmail( params ) {
       // });
 
       // Create Nodemailer transporter
-      const transporter = nodemailer.createTransport({
-        SES: new aws.SES({ apiVersion: '2010-12-01' })
+      // Create Nodemailer transporter with SES
+      // Create Nodemailer transporter with SES
+      // Create Nodemailer transporter with SES
+      // Create Nodemailer transporter with SES
+      // create Nodemailer SES transporter
+      let transporter = nodemailer.createTransport({
+        SES: { ses, aws },
       });
 
       // Email content
