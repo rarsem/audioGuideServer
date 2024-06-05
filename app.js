@@ -10,57 +10,58 @@ const userRoutes = require("./routes/user")
 const touristRoutes = require("./routes/tourist")
 const authorizationRoutes = require('./routes/authorization')
 const cleanupRouter = require('./routes/cleanup')
-//test
+const apiVersionRouter = require('./routes/apiVersion')
 
 const app = express();
-const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority";
-console.log(uri);
-mongoose.connect(uri,{
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-})
-//mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
+
+// const uri = "mongodb+srv://"+process.env.MONGO_USER+":"+process.env.MONGO_PW+"@cluster0.gnkk5o9.mongodb.net/audioGuideDb?retryWrites=true&w=majority";
+
+// mongoose.connect(uri,{
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// })
+mongoose.connect("mongodb+srv://mmoud:"+process.env.MONGO_ATLAS_PW_+"@atlascluster.vnwyqes.mongodb.net/porjectDb?retryWrites=true&w=majority")
 .then(()=>{
-        console.log('conntect with mongoDb done!!')
+    console.log('conntect with mongoDb done!!')
 }).catch(() => {
-        console.log('connection failed')
+    console.log('connection failed')
 })
 
 const allowedOrigins = [
-    'capacitor://localhost',
-    'ionic://localhost',
-    'http://localhost',
-    'http://10.0.2.2',
-    'http://192.168.0.122',
-    'http://192.168.8.115:8100',
-    'http://192.168.234.1:8100',
-    'http://localhost:8080',
-    'http://localhost:8100',
-    'http://localhost:4200',
-    'http://192.168.190.1:8100',
-    'ionic://localhost:8100',
-    'ionic://*.*',
-    'ionic://*.*:3000',
-    'file://*',
-    'http://51.20.53.50:3000',
-    'http://audioguidea.s3-website.eu-north-1.amazonaws.com',
-    'https://api.mcovery.com',
-    'https://api.mcovery.com:3000',
-    'https://admin.mcovery.com'
-  ];
+  'capacitor://localhost',
+  'ionic://localhost',
+  'http://localhost',
+  'http://10.0.2.2',
+  'http://192.168.0.122',
+  'http://192.168.8.115:8100',
+  'http://192.168.234.1:8100',
+  'http://localhost:8080',
+  'http://localhost:8100',
+  'http://localhost:4200',
+  'http://192.168.190.1:8100',
+  'ionic://localhost:8100',
+  'ionic://*.*',
+  'ionic://*.*:3000',
+  'file://*',
+  'http://51.20.53.50:3000',
+  'http://audioguidea.s3-website.eu-north-1.amazonaws.com',
+  'https://api.mcovery.com',
+  'https://api.mcovery.com:3000',
+  'https://admin.mcovery.com'
+];
   
-  // Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
-  const corsOptions = {
+// Reflect the origin if it's in the allowed list or not defined (cURL, Postman, etc.)
+const corsOptions = {
     origin: (origin, callback) => {
-      if (allowedOrigins.includes(origin) || !origin) {
-        callback(null, true);
-      } else {
-        callback(new Error('Origin not allowed by CORS'));
-      }
+        if (allowedOrigins.includes(origin) || !origin) {
+            callback(null, true);
+        } else {
+            callback(new Error('Origin not allowed by CORS'));
+        }
     },
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     allowedHeaders: ['Content-Type', 'Authorization'], // Add other headers as needed
-  };
+};
       
 app.use(cors(corsOptions));
 
@@ -94,6 +95,8 @@ app.use('/api/tourist', touristRoutes);
 
 // Use the cleanup router
 app.use('/api', cleanupRouter);
+
+app.use('/api/apiVersion', apiVersionRouter);
 
 // Health endpoint
 app.get('/health', (req, res) => {
